@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Insertar Club</title><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+body{background:#f8f9fa}
+.navbar-brand{font-weight:700}
+.card{box-shadow:0 4px 6px rgba(0,0,0,0.1);border:none}
+.table thead th{background:#198754;color:#fff}
+.btn-success{background:#198754;border:none}
+.btn-success:hover{background:#146c43}
+.btn-danger{background:#dc3545;border:none}
+.btn-primary{background:#0d6efd;border:none}
+.form-label{font-weight:600}
+</style></head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+<div class="container">
+<a class="navbar-brand" href="/">⚽ FutbolApp</a>
+<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="nav">
+<ul class="navbar-nav ms-auto"><li class="nav-item"><a class="nav-link " href="/">Inicio</a></li>
+<li class="nav-item"><a class="nav-link " href="/entrenadores">Entrenadores</a></li>
+<li class="nav-item"><a class="nav-link " href="/jugadores">Jugadores</a></li>
+<li class="nav-item"><a class="nav-link " href="/asociaciones">Asociaciones</a></li>
+<li class="nav-item"><a class="nav-link " href="/competiciones">Competiciones</a></li>
+<li class="nav-item"><a class="nav-link active" href="/clubes">Clubes</a></li></ul>
+</div>
+</div>
+</nav>
+<div class="container">
+<div class="row justify-content-center">
+<div class="col-md-8">
+<div class="card">
+<div class="card-body">
+<h3 class="card-title mb-4">Nuevo Club</h3>
+<form th:action="@{'/clubes/guardar'}" method="post">
+<div class="mb-3">
+<label class="form-label">Nombre del Club</label>
+<input type="text" class="form-control" name="nombre" placeholder="Ej: Real Madrid" required/>
+</div>
+<div class="mb-3">
+<label class="form-label">Entrenador</label>
+<select class="form-select" name="entrenadorId" required>
+<option value="" disabled selected>Seleccione...</option>
+<option th:each="e : ${entrenadores}" th:value="${e.id}" th:text="${e.nombre + ' ' + e.apellido}"></option>
+</select>
+</div>
+<div class="mb-3">
+<label class="form-label">Asociación</label>
+<select class="form-select" name="asociacionId" required>
+<option value="" disabled selected>Seleccione...</option>
+<option th:each="a : ${asociaciones}" th:value="${a.id}" th:text="${a.nombre}"></option>
+</select>
+</div>
+<div class="mb-3">
+<label class="form-label">Jugadores (Ctrl+Click para varios)</label>
+<select class="form-select" name="jugadorIds" multiple size="4">
+<option th:each="j : ${jugadores}" th:value="${j.id}" th:text="${j.nombre + ' ' + j.apellido + ' (' + j.posicion + ')'}"></option>
+</select>
+</div>
+<div class="mb-3">
+<label class="form-label">Competiciones (Ctrl+Click para varios)</label>
+<select class="form-select" name="competicionIds" multiple size="4">
+<option th:each="c : ${competiciones}" th:value="${c.id}" th:text="${c.nombre}"></option>
+</select>
+</div>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+<a th:href="@{'/clubes'}" class="btn btn-secondary">Cancelar</a>
+<button type="submit" class="btn btn-success">Guardar</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
